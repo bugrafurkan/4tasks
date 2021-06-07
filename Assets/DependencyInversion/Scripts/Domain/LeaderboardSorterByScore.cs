@@ -4,7 +4,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 
-	public class LeaderboardSorterByScore
+	public class LeaderboardSorterByScore : IScoreSorter
 	{
 		public IEnumerable<LeaderboardItem> Sort(FakeLeaderboardProvider leaderboardProvider) =>
 			leaderboardProvider.GetItems().OrderByDescending(i => i.Score);

@@ -13,6 +13,13 @@ public class ControlPoint : MonoBehaviour
     public float shootPower = 30f;
 
     public LineRenderer line;
+    
+    Vector3 startPosition;
+    
+    void Start(){
+        startPosition = this.transform.position;
+    }
+   
 
     // Update is called once per frame
     void Update()
@@ -29,12 +36,18 @@ public class ControlPoint : MonoBehaviour
                 yRot = 30f;
             }
             transform.rotation = Quaternion.Euler(yRot, xRot, 0f);
+            startPosition = transform.position;
             line.gameObject.SetActive(true);
             line.SetPosition(0, transform.position);
             line.SetPosition(1, transform.position + transform.forward * 4f);
+
         }
+        
          if (Input.GetMouseButtonUp(0)){
-             ball.velocity = transform.forward * shootPower;
+             //mouseReleasePos.x = Input.GetAxis("Mouse X");
+            Vector2 directionToEndPosition = startPosition - transform.position;
+            float lengthVector = directionToEndPosition.SqrMagnitude();
+             ball.velocity = transform.forward * lengthVector * shootPower;
              line.gameObject.SetActive(false);
          }
 
